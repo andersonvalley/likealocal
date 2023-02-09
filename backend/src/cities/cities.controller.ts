@@ -1,19 +1,19 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Controller, Get, Post } from '@nestjs/common'
 
 @Controller('cities')
 export class CitiesController {
   @Get()
-  getAll(): string {
-    return ''
+  findAll() {
+    return
   }
 
   @Get()
-  getOne(): string {
-    return 'string'
+  findOne() {
+    return
   }
 
   @Post()
-  createCity(@Body body): string {
-    return 'created'
+  createCity() {
+    return
   }
 }
