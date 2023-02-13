@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { UserEntity } from './users.entity'
+import { AuthEntity } from './auth.entity'
 import { createUserDto } from './dto/create-user.dto'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
@@ -8,18 +8,16 @@ import * as jwt from 'jsonwebtoken'
 import * as process from 'process'
 
 @Injectable()
-export class UsersService {
+export class AuthService {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>
+    @InjectRepository(AuthEntity)
+    private readonly authRepository: Repository<AuthEntity>
   ) {}
 
-  async registration(dto: createUserDto) {
-    const candidate = await this.userRepository.findOne({
+  async register(dto: createUserDto) {
+    const candidate = await this.authRepository.findOne({
       where: { email: dto.email }
     })
-
-    console.log(candidate)
 
     if (candidate) {
       throw new HttpException(
@@ -30,7 +28,7 @@ export class UsersService {
 
     const hashPassword = await bcrypt.hash(dto.password, 5)
 
-    const user = await this.userRepository.create({
+    const user = await this.authRepository.create({
       ...dto,
       password: hashPassword
     })
@@ -42,7 +40,7 @@ export class UsersService {
       )
     }
 
-    await this.userRepository.save(user)
+    await this.authRepository.save(user)
 
     const accessToken = jwt.sign(
       { email: dto.email, name: dto.name },
@@ -60,7 +58,7 @@ export class UsersService {
   }
 
   async login(dto: createUserDto) {
-    const user = await this.userRepository.findOne({
+    const user = await this.authRepository.findOne({
       where: { email: dto.email }
     })
 
@@ -94,23 +92,39 @@ export class UsersService {
 
     return { accessToken, refreshToken }
   }
-  async createUser(dto: createUserDto) {
-    const user = this.userRepository.create(dto)
-    return this.userRepository.save(user)
+
+  async logout() {}
+
+  async refreshTokens() {}
+
+  async getUserData(id) {
+    const user = await this.authRepository.findOne({ where: { id } })
+
+    if (!user) {
+      throw new HttpException(`Пользователь не найден`, HttpStatus.BAD_REQUEST)
+    }
+
+    return this.authRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.favorites', 'favorite')
+      .getMany()
   }
 
-  async getAllUsers() {
-    const users = await this.userRepository.find()
+  async getUsers() {
+    const users = await this.authRepository.find()
+
+    if (!users) {
+      throw new HttpException(`Пользователи не найден`, HttpStatus.BAD_REQUEST)
+    }
+
     return users
   }
 
-  async getOne(id: string) {
-    const user = await this.userRepository.findOne({ where: { id } })
-    return user
-  }
+  async updateUser() {}
 
   async deleteUser(id: string) {
-    const user = await this.userRepository.findOne({ where: { id } })
+    const user = await this.authRepository.findOne({ where: { id } })
+
     if (!user) {
       throw new HttpException(
         `Ошибка при удалении пользователя`,
@@ -118,7 +132,7 @@ export class UsersService {
       )
     }
 
-    await this.userRepository.delete({ id })
+    await this.authRepository.delete({ id })
     return 'Пользователь удален'
   }
 }

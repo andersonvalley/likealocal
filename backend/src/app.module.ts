@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { join } from 'path'
-import { AppController } from './app.controller'
 import { LocationModule } from './location/location.module'
-import { AppService } from './app.service'
-import { UsersModule } from './auth/users.module'
+import { AuthModule } from './auth/auth.module'
 import { CityModule } from './cities/cities.module'
+import { FavoritesModule } from './favorites/favorites.module'
 
 @Module({
   imports: [
@@ -21,10 +20,11 @@ import { CityModule } from './cities/cities.module'
       synchronize: true
     }),
     LocationModule,
-    UsersModule,
-    CityModule
+    AuthModule,
+    CityModule,
+    FavoritesModule
   ],
-  controllers: [AppController],
-  providers: [AppService]
+  controllers: [],
+  providers: []
 })
 export class AppModule {}

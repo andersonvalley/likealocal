@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { FavoritesEntity } from '../favorites/favorites.entity'
+import { IsEmail, Min } from 'class-validator'
 
 export interface IUser {
   id: string
@@ -11,7 +13,7 @@ export interface IUser {
 }
 
 @Entity('users')
-export class UserEntity {
+export class AuthEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
@@ -19,9 +21,11 @@ export class UserEntity {
   name: string
 
   @Column({ unique: true })
+  @IsEmail()
   email: string
 
   @Column()
+  @Min(6)
   password: string
 
   @Column({ default: false })
@@ -29,4 +33,7 @@ export class UserEntity {
 
   @Column({ default: false })
   banned: boolean
+
+  @OneToMany((type) => FavoritesEntity, (favorite) => favorite.user)
+  favorites: FavoritesEntity[]
 }

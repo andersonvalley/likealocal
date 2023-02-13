@@ -8,15 +8,15 @@ export class CitiesEntity {
   @Column({ unique: true })
   title: string
 
-  @Column()
+  @Column({ default: '' })
   description: string
 
   @Column()
   URL: string
 
   @Column({ default: [] })
-  cards: boolean
+  cards: string
 
   @Column({ default: [] })
-  images: boolean
+  images: string
 }
