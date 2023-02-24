@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { PlacesEntity } from '../places/places.entity'
 
 @Entity('cities')
 export class CitiesEntity {
@@ -19,4 +20,7 @@ export class CitiesEntity {
 
   @Column({ default: [] })
   images: string
+
+  @OneToMany((type) => PlacesEntity, (places) => places.city)
+  places: PlacesEntity[]
 }

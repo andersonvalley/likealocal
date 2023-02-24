@@ -13,7 +13,7 @@ export class FavoritesController {
 
   @Get()
   getFavorites() {
-    return this.getFavorites()
+    return this.favoritesService.getFavorites()
   }
 
   @Get(':id')

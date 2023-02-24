@@ -5,6 +5,9 @@ import { LocationModule } from './location/location.module'
 import { AuthModule } from './auth/auth.module'
 import { CityModule } from './cities/cities.module'
 import { FavoritesModule } from './favorites/favorites.module'
+import { MulterModule } from '@nestjs/platform-express'
+import { PlacesModule } from './places/places.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -19,10 +22,15 @@ import { FavoritesModule } from './favorites/favorites.module'
       migrations: [join(__dirname, '**', '/../**/*.migration{.ts,.js}')],
       synchronize: true
     }),
+    MulterModule.register({
+      dest: '../uploads'
+    }),
     LocationModule,
     AuthModule,
     CityModule,
-    FavoritesModule
+    FavoritesModule,
+    PlacesModule,
+    ImagesModule
   ],
   controllers: [],
   providers: []
