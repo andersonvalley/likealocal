@@ -1,0 +1,74 @@
+.overlay {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.73);
+
+  &.open {
+    visibility: visible;
+
+    .sidebar {
+      right: 0;
+    }
+  }
+}
+
+.sidebar {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -1000px;
+  background-color: azure;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 10px;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  transition: all 400ms ease-in-out;
+
+  &__title {
+    text-align: center;
+    font-size: 5rem;
+    font-weight: 900;
+    margin: 10rem 0 5rem 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+
+    input {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      border: none;
+      padding: 17px 20px;
+    }
+
+    button {
+      background-color: yellow;
+      border-radius: 15px;
+      width: 100%;
+      padding: 17px 20px;
+    }
+  }
+
+  &__use {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  &__group {
+    margin: 0 auto;
+  }
+}

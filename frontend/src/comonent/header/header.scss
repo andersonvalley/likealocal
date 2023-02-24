@@ -1,0 +1,67 @@
+
+
+.header {
+  padding: 10px 0;
+
+  &__container {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+  }
+
+  &__group {
+    display: flex;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 1.9rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    span {
+      padding-left: 7px;
+    }
+
+    svg {
+      fill: #fff;
+      stroke: #fff;
+    }
+
+    &:hover {
+      background-color: lighten(rgb(12, 115, 254), 10)
+    }
+  }
+
+  &__menu {
+    svg {
+      fill: #fff;
+      width: 24px;
+      height: 24px;
+    }
+
+    span {
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+  }
+
+  &__favorites {
+    svg path {
+      stroke: #fff;
+      fill: #fff;
+    }
+  }
+
+  &__search {
+    svg {
+      height: 25px;
+      width: 23px;
+    }
+  }
+}
