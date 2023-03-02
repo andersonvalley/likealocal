@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import Header from './comonent/header/Header'
-import MainPage from './pages/main/MainPage'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Sidebar from './comonent/sidebar/Sidebar'
-import AuthPage from './pages/auth/AuthPage'
+import { RoutesApp } from './routes'
+import Footer from './comonent/footer/Footer'
 
 function App() {
+  const routes = RoutesApp()
   const [openSidebar, setOpenSidebar] = useState(false)
-  const { pathname } = useLocation();
+  const { pathname } = useLocation()
+  // const location = getLocation()
 
   React.useEffect(() => {
     if (pathname === '/auth') {
@@ -19,15 +21,16 @@ function App() {
     <>
       <Header openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
       <Sidebar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
-     <main>
-       <Routes>
-         <Route path="/">
-           <Route path='/' element={<MainPage />} />
-            <Route path="/auth" element={<AuthPage />} />
-         </Route>
-       </Routes>
-       <MainPage />
-     </main>
+      <main className='main'>
+        <div className='container'>
+          <Routes>
+            {routes.map((route) => (
+              <Route key={route.path} path={route.path} element={route.element} />
+            ))}
+          </Routes>
+        </div>
+      </main>
+      <Footer />
     </>
   )
 }

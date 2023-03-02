@@ -1,6 +1,7 @@
 .overlay {
   visibility: hidden;
   position: fixed;
+  z-index: 9;
   top: 0;
   bottom: 0;
   left: 0;
@@ -9,16 +10,13 @@
 
   &.open {
     visibility: visible;
-
-    .sidebar {
-      right: 0;
-    }
   }
 }
 
 .sidebar {
   overflow: hidden;
   position: absolute;
+  z-index: 10;
   top: 0;
   bottom: 0;
   right: -1000px;
@@ -31,6 +29,11 @@
   display: flex;
   flex-direction: column;
   transition: all 400ms ease-in-out;
+
+  &.open {
+    right: 0;
+    z-index: 10;
+  }
 
   &__title {
     text-align: center;

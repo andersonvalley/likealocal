@@ -1,18 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { text } from 'stream/consumers';
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class LocationService {
-  getLocation() {
-    return this.getCity();
-  }
+  async getLocation(ip) {
+    const url = `https://www.travelpayouts.com/whereami?locale=ru&ip=${ip}`
 
-  async getCity() {
-    const url = `https://geolocation.onetrust.com/cookieconsentpub/v1/geo/location`;
-
-    const response = await fetch(url);
-    const data = await response.text();
-    const text = data.slice(9, data.length - 2);
-    return JSON.parse(text);
+    const response = await fetch(url)
+    const data = await response.json()
+    return data
   }
 }

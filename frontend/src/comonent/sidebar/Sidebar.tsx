@@ -13,22 +13,21 @@ function Sidebar({ openSidebar, setOpenSidebar }: ISidebar) {
   const navigate = useNavigate()
 
   const closeSideBar = (event: React.MouseEvent) => {
-    if (event.currentTarget.closest('.sidebar') && !event.currentTarget.closest('.sidebar__back')) return
+    console.log(event.currentTarget)
+    if (event.currentTarget.closest('.sidebar') && !event.currentTarget.closest('.sidebar__back'))
+      return
     setOpenSidebar(false)
     navigate('/')
   }
 
-
   return (
-    <div onClick={closeSideBar} className={openSidebar ? 'overlay open' : 'overlay'}>
-      <aside className='sidebar sidebar__auth'>
+    <>
+      <aside className={openSidebar ? 'sidebar sidebar__auth open' : 'sidebar sidebar__auth'}>
         <div onClick={closeSideBar} className='sidebar__back'>
           <MdOutlineArrowBack />
         </div>
 
-        <h1 className='sidebar__title'>
-          Войдите или зарегистрируйтесь
-        </h1>
+        <h1 className='sidebar__title'>Войдите или зарегистрируйтесь</h1>
 
         <form className='sidebar__form' action='' method='POST' autoComplete='true'>
           <input type='email' placeholder='Ваш email' autoComplete='on' />
@@ -43,7 +42,8 @@ function Sidebar({ openSidebar, setOpenSidebar }: ISidebar) {
           <button className='btn'>Google</button>
         </div>
       </aside>
-    </div>
+      <div onClick={closeSideBar} className={openSidebar ? 'overlay open' : 'overlay'}></div>
+    </>
   )
 }
 
